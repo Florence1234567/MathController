@@ -12,6 +12,12 @@ export default class MathsController extends Controller {
     get() {
         const urlParams = this.HttpContext.path.params;
 
+        if (!urlParams.op) {
+            this.HttpContext.req.url = "../wwwroot/Maths/index.html";
+            handleStaticResourceRequest(this.HttpContext)
+            return;
+        }
+        
         //Call the right function with the symbol.
         switch (urlParams.op) {
             case ' ':
@@ -44,12 +50,6 @@ export default class MathsController extends Controller {
             default:
                 this.HttpContext.response.badRequest("Invalid operation");
                 break;
-        }
-
-        if (!urlParams.op) {
-            this.HttpContext.req.url = "../wwwroot/Maths/ExemplesMath.html";
-            handleStaticResourceRequest(this.HttpContext)
-            return;
         }
     }
 
