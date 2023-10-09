@@ -63,7 +63,7 @@ export default class MathsController extends Controller {
             if (isNaN(x)) {
                 invalidParameters.push('x');
             }
-            else if (isNaN(y)) {
+            if (isNaN(y)) {
                 invalidParameters.push('y');
             }
 
