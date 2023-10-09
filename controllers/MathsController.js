@@ -47,7 +47,7 @@ export default class MathsController extends Controller {
         }
 
         if (!urlParams.op) {
-            this.HttpContext.req.url = "../wwwroot/Maths/TestsMath.html";
+            this.HttpContext.req.url = "../wwwroot/Maths/ExemplesMath.html";
             handleStaticResourceRequest(this.HttpContext)
             return;
         }
