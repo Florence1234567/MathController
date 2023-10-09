@@ -25,51 +25,42 @@
         <h2><a href="api/contacts" target="_blank">Contacts</a></h2>
         <div class="endpoints">
             <span>GET</span>
-            <span>api/contacts</span>
+            <span>api/maths?</span>
             <span></span>
 
             <span>GET</span>
-            <span>api/contacts/id</span>
-            <span></span>
+            <span>api/maths?op=+</span>
+            <span>{ "x": number, "y": number }</span>
 
-            <span>POST</span>
-            <span>api/contacts</span>
-            <span>{ "Name": string, "Phone": string, "Email": string } Name doit être unique</span>
-
-            <span>PUT</span>
-            <span>api/contacts/id</span>
-            <span>{ "Name": string, "Phone": string, "Email": string } Name doit être unique</span>
-
-            <span>DELETE</span>
-            <span>api/contacts/id</span>
-            <span></span>
-
+            <span>GET</span>
+            <span>api/maths?op=-</span>
+            <span>{ "x": number, "y": number }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=*</span>
+            <span>{ "x": number, "y": number }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=/</span>
+            <span>{ "x": number, "y": number }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=%</span>
+            <span>{ "x": number, "y": number }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=!</span>
+            <span>{ "number": int }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=p</span>
+            <span>{ "number": int }</span>
+          
+            <span>GET</span>
+            <span>api/maths?op=np</span>
+            <span>{ "number": int }</span>
         </div>
         <br>
-
-        <h2><a href="api/bookmarks" target="_blank">Bookmarks</a></h2>
-        <div class="endpoints">
-            <span>GET</span>
-            <span>api/bookmarks</span>
-            <span></span>
-
-            <span>GET</span>
-            <span>api/bookmarks/id</span>
-            <span></span>
-
-            <span>POST</span>
-            <span>api/bookmarks</span>
-            <span>{ "Title": string, "Url": string, "Category": string } Title doit être unique</span>
-
-            <span>PUT</span>
-            <span>api/bookmarks/id</span>
-            <span>{ "Title": string, "Url": string, "Category": string } Title doit être unique</span>
-
-            <span>DELETE</span>
-            <span>api/bookmarks/id</span>
-            <span></span>
-
-        </div>
 
     </div>
     <script>
