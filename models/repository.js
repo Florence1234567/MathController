@@ -1,5 +1,5 @@
 import fs from "fs";
-import * as utilities from "../utilities.js";
+import * as utilities from "../wwwroot/utilities.js";
 let jsonFilesPath = "jsonFiles";
 // res object wrapper
 export default class Repository {
