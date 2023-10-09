@@ -5,8 +5,7 @@ import HttpContext from "../httpContext.js";
 
 export default class MathsController extends Controller {
     constructor(HttpContext, repository = null) {
-        this.HttpContext = HttpContext;
-        this.repository = repository;
+        super(HttpContext, repository);
     }
 
     get() {
@@ -21,31 +20,31 @@ export default class MathsController extends Controller {
         //Call the right function with the symbol.
         switch (urlParams.op) {
             case ' ':
-                this.Addition(urlParams);
+                this.Addition(urlParams.x, urlParams.y);
                 break;
             case '+':
-                this.Addition(urlParams);
+                this.Addition(urlParams.x, urlParams.y);
                 break;
             case '-':
-                this.Subtraction(urlParams);
+                this.Subtraction(urlParams.x, urlParams.y);
                 break;
             case '*':
-                this.Multiplication(urlParams);
+                this.Multiplication(urlParams.x, urlParams.y);
                 break;
             case '/':
-                this.Division(urlParams);
+                this.Division(urlParams.x, urlParams.y);
                 break;
             case '%':
-                this.Modulus(urlParams);
+                this.Modulus(urlParams.x, urlParams.y);
                 break;
             case '!':
-                this.Factorial(urlParams);
+                this.Factorial(urlParams.number);
                 break;
             case 'p':
-                this.Primality(urlParams);
+                this.Primality(urlParams.number);
                 break;
             case 'np':
-                this.NthPrime(urlParams);
+                this.NthPrime(urlParams.number);
                 break;
             default:
                 this.HttpContext.response.badRequest("Invalid operation");
@@ -53,10 +52,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Addition(urlParams) {
-        let x = urlParams.x;
-        let y = urlParams.y;
-
+    Addition(x, y) {
         if (isNaN(x) || isNaN(y)) {
             let invalidParameters = [];
 
@@ -96,10 +92,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Subtraction(urlParams) {
-        let x = urlParams.x;
-        let y = urlParams.y;
-
+    Subtraction(x, y) {
         if (isNaN(x) || isNaN(y)) {
             let invalidParameters = [];
 
@@ -141,10 +134,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Multiplication(urlParams) {
-        let x = urlParams.x;
-        let y = urlParams.y;
-
+    Multiplication(x, y) {
         if (isNaN(x) || isNaN(y)) {
             let invalidParameters = [];
 
@@ -186,10 +176,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Division(urlParams) {
-        let x = urlParams.x;
-        let y = urlParams.y;
-
+    Division(x, y) {
         if (isNaN(x) || isNaN(y)) {
             let invalidParameters = [];
 
@@ -231,10 +218,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Modulus(urlParams) {
-        let x = urlParams.x;
-        let y = urlParams.y;
-
+    Modulus(x, y) {
         if (isNaN(x) || isNaN(y) || !Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || y === 0) {
             let invalidParameters = [];
 
@@ -276,9 +260,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Factorial(urlParams) {
-        let number = urlParams.number;
-
+    Factorial(number) {
         if (isNaN(number) || !Number.isInteger(Number(number)) || number < 0) {
             this.HttpContext.response.JSON({
                 op: '!',
@@ -299,9 +281,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    Primality(urlParams) {
-        let number = urlParams.number;
-
+    Primality(number) {
         if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 1) {
             this.HttpContext.response.JSON({
                 op: 'p',
@@ -321,9 +301,7 @@ export default class MathsController extends Controller {
         }
     }
 
-    NthPrime(urlParams) {
-        let number = urlParams.number;
-
+    NthPrime(number) {
         if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 0) {
             this.HttpContext.response.JSON({
                 op: 'np',
