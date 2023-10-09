@@ -13,11 +13,11 @@ export default class MathsController extends Controller {
         const urlParams = this.HttpContext.path.params;
 
         if (!urlParams.op) {
-            this.HttpContext.req.url = "../wwwroot/Maths/index.html";
+            this.HttpContext.req.url = "../wwwroot/Maths/TestsMath.html";
             handleStaticResourceRequest(this.HttpContext)
             return;
         }
-        
+
         //Call the right function with the symbol.
         switch (urlParams.op) {
             case ' ':
