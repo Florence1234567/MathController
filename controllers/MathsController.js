@@ -19,334 +19,172 @@ export default class MathsController extends Controller {
     //Call the right function with the symbol.
     switch (urlParams.op) {
       case " ":
-        this.Addition(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "+":
-        this.Addition(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "-":
-        this.Subtraction(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "*":
-        this.Multiplication(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "/":
-        this.Division(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "%":
-        this.Modulus(urlParams.x, urlParams.y);
+        this.OperationXY(urlParams.x, urlParams.y, urlParams.op);
         break;
       case "!":
-        this.Factorial(urlParams.n);
+        this.OperationN(urlParams.n, urlParams.op);
         break;
       case "p":
-        this.Primality(urlParams.n);
+        this.OperationN(urlParams.n, urlParams.op);
         break;
       case "np":
-        this.NthPrime(urlParams.n);
-        break;
-      default:
-        this.HttpContext.response.badRequest("Invalid operation");
+        this.OperationN(urlParams.n, urlParams.op);
         break;
     }
   }
 
-  Addition(x, y) {
-    if (isNaN(x) || isNaN(y)) {
-      let invalidParameters = [];
-
-      if (isNaN(x)) {
-        invalidParameters.push("x");
+  OperationXY(x, y, op) {
+    if (!x || !y) {
+      //If x or y is null.
+      const nullParams = [];
+      if (!x) {
+        nullParams.push("x");
       }
-      if (isNaN(y)) {
-        invalidParameters.push("y");
+      if (!y) {
+        nullParams.push(", y");
       }
 
       this.HttpContext.response.JSON({
         op: "+",
         x,
         y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
+        error: `${nullParams} is null.`,
       });
-    } else if (!x || !y) {
-      let invalidParameters = [];
-
-      if (!x) {
-        invalidParameters.push("x");
+    } else if (isNaN(x) || isNaN(y)) {
+      //If not a number.
+      const invalidParams = [];
+      if (isNaN(x)) {
+        invalidParams.push("x");
       }
-
-      if (!y) {
-        invalidParameters.push("y");
+      if (isNaN(y)) {
+        invalidParams.push(", y");
       }
 
       this.HttpContext.response.JSON({
         op: "+",
         x,
         y,
-        error: `${invalidParameters.join(", ")} missing.`,
+        error: `${invalidParams} is not an number.`,
       });
     } else {
-      const answer = parseFloat(x) + parseFloat(y);
-      this.HttpContext.response.JSON({
-        op: "+",
-        x,
-        y,
-        value: answer,
-      });
+      if (op == " " || op == "+") {
+        let answer = parseInt(x) + parseInt(y);
+
+        this.HttpContext.response.JSON({
+          op: "+",
+          x,
+          y,
+          value: answer
+        });
+      }
+      else if (op == "-") {
+        let answer = parseInt(x) - parseInt(y);
+
+        this.HttpContext.response.JSON({
+          op: "-",
+          x,
+          y,
+          value: answer
+        });
+      }
+      else if (op == "*") {
+        let answer = parseInt(x) * parseInt(y);
+
+        this.HttpContext.response.JSON({
+          op: "*",
+          x,
+          y,
+          value: answer
+        });
+      }
+      else if (op == "/") {
+        let answer = parseInt(x) / parseInt(y);
+
+        this.HttpContext.response.JSON({
+          op: "/",
+          x,
+          y,
+          value: answer
+        });
+      }
+      else if (op == "%") {
+        let answer = parseInt(x) % parseInt(y);
+
+        this.HttpContext.response.JSON({
+          op: "%",
+          x,
+          y,
+          value: answer
+        });
+      }
     }
   }
-
-  Subtraction(x, y) {
-    if (isNaN(x) || isNaN(y)) {
-      let invalidParameters = [];
-
-      if (isNaN(x)) {
-        invalidParameters.push("x");
-      }
-
-      if (isNaN(y)) {
-        invalidParameters.push("y");
-      }
-
+  
+  OperationN(number, op){
+    if(!Number.isInteger(parseInt(number)) || isNaN(number)){
       this.HttpContext.response.JSON({
-        op: "-",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
-      });
-    } else if (!x || !y) {
-      let invalidParameters = [];
-
-      if (!x) {
-        invalidParameters.push("x");
-      }
-
-      if (!y) {
-        invalidParameters.push("y");
-      }
-
-      this.HttpContext.response.JSON({
-        op: "-",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} missing.`,
-      });
-    } else {
-      const answer = parseFloat(x) - parseFloat(y);
-      this.HttpContext.response.JSON({
-        op: "-",
-        x,
-        y,
-        value: answer,
+        op: `${op}`,
+        number,
+        error: "number not an int.",
       });
     }
-  }
-
-  Multiplication(x, y) {
-    if (isNaN(x) || isNaN(y)) {
-      let invalidParameters = [];
-
-      if (isNaN(x)) {
-        invalidParameters.push("x");
-      }
-
-      if (isNaN(y)) {
-        invalidParameters.push("y");
-      }
-
+    else if(number < 0){
       this.HttpContext.response.JSON({
-        op: "*",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
+        op: `${op}`,
+        number,
+        error: "number smaller than one.",
       });
-    } else if (!x || !y) {
-      let invalidParameters = [];
-
-      if (!x) {
-        invalidParameters.push("x");
-      }
-
-      if (!y) {
-        invalidParameters.push("y");
-      }
-
+    } 
+    else if(!number){
       this.HttpContext.response.JSON({
-        op: "*",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} missing.`,
-      });
-    } else {
-      const answer = parseInt(x) * parseInt(y);
-      this.HttpContext.response.JSON({
-        op: "*",
-        x,
-        y,
-        value: answer,
+        op: `${op}`,
+        number,
+        error: "number is null.",
       });
     }
-  }
+    else {
+      if(op == "!"){
+        let answer = this.Factorial(number);
 
-  Division(x, y) {
-    if (isNaN(x) || isNaN(y)) {
-      let invalidParameters = [];
-
-      if (isNaN(x)) {
-        invalidParameters.push("x");
+        this.HttpContext.response.JSON({
+          op: "!",
+          number,
+          value: answer
+        });
       }
+      else if(op == "p") {
+        let answer = this.IsPrime(number);
 
-      if (isNaN(y)) {
-        invalidParameters.push("y");
+        this.HttpContext.response.JSON({
+          op: "p",
+          number,
+          value: answer
+        });
       }
+      else if(op == "np"){
+        let answer = this.GetNtnPrime(number);
 
-      this.HttpContext.response.JSON({
-        op: "/",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
-      });
-    } else if (!x || !y) {
-      let invalidParameters = [];
-
-      if (!x) {
-        invalidParameters.push("x");
+        this.HttpContext.response.JSON({
+          op: "np",
+          number,
+          value: answer
+        });
       }
-
-      if (!y) {
-        invalidParameters.push("y");
-      }
-
-      this.HttpContext.response.JSON({
-        op: "/",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} missing.`,
-      });
-    } else {
-      const answer = parseInt(x) / parseInt(y);
-      this.HttpContext.response.JSON({
-        op: "/",
-        x,
-        y,
-        value: answer,
-      });
-    }
-  }
-
-  Modulus(x, y) {
-    if (isNaN(x) || !Number.isInteger(parseInt(x)) || isNaN(y) ||  !Number.isInteger(parseInt(y)) || y == 0) {
-      let invalidParameters = [];
-
-      if (isNaN(x) || !Number.isInteger(Number(x))) {
-        invalidParameters.push("x");
-      }
-
-      if (isNaN(y) || !Number.isInteger(Number(y)) || y === 0) {
-        invalidParameters.push("y");
-      }
-
-      this.HttpContext.response.JSON({
-        op: "%",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an Integer`,
-      });
-    } else if (!x || !y) {
-      let invalidParameters = [];
-
-      if (!x) {
-        invalidParameters.push("x");
-      }
-
-      if (!y) {
-        invalidParameters.push("y");
-      }
-
-      this.HttpContext.response.JSON({
-        op: "%",
-        x,
-        y,
-        error: `${invalidParameters.join(", ")} missing.`,
-      });
-    } else {
-      const answer = parseInt(x) % parseInt(y);
-      this.HttpContext.response.JSON({
-        op: "%",
-        x,
-        y,
-        value: answer,
-      });
-    }
-  }
-
-  //Je ne comprend pas pourquoi le factorial et le ntnPrime ne fonctionne pas.
-  Factorial(number) {
-    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number < 0) {
-      this.HttpContext.response.JSON({
-        op: "!",
-        number,
-        error: "Number is invalid. It must be a non-negative int.",
-      });
-    } else if (!number) {
-      this.HttpContext.response.JSON({
-        op: "!",
-        number,
-        error: "Number missing.",
-      });
-    } else {
-      const answer = this.Factorial(parseInt(number));
-      this.HttpContext.response.JSON({
-        op: "!",
-        number,
-        value: answer,
-      });
-    }
-  }
-
-  Primality(number) {
-    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number <= 1) {
-      this.HttpContext.response.JSON({
-        op: "p",
-        number,
-        error: "Number is invalid. Must be an int greater than 1.",
-      });
-    } else if (!number) {
-      this.HttpContext.response.JSON({
-        op: "p",
-        number,
-        error: "Number is missing.",
-      });
-    } else {
-      const answer = this.IsPrime(parseInt(number));
-      this.HttpContext.response.JSON({
-        op: "p",
-        number,
-        value: answer,
-      });
-    }
-  }
-
-  NtnPrimeNumber(number) {
-    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number < 0) {
-      this.HttpContext.response.JSON({
-        op: "np",
-        number,
-        error: "Number is invalid. Must be an int greater than 1",
-      });
-    } else if (!number) {
-      this.HttpContext.response.JSON({
-        op: "np",
-        number,
-        error: "Number missing.",
-      });
-    } else {
-      const answer = this.FindNtnPrime(parseInt(number));
-      this.HttpContext.response.JSON({
-        op: "np",
-        number,
-        value: answer,
-      });
     }
   }
 
@@ -370,7 +208,7 @@ export default class MathsController extends Controller {
     return true;
   }
 
-  FindNthPrime(number) {
+  GetNthPrime(number) {
     let count = 0;
     let num = 2;
     while (count < number) {
