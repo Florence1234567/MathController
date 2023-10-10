@@ -66,7 +66,7 @@ export default class MathsController extends Controller {
         op: "+",
         x,
         y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an Integer`,
+        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
       });
     } else if (!x || !y) {
       let invalidParameters = [];
@@ -112,7 +112,7 @@ export default class MathsController extends Controller {
         op: "-",
         x,
         y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an Integer`,
+        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
       });
     } else if (!x || !y) {
       let invalidParameters = [];
@@ -158,7 +158,7 @@ export default class MathsController extends Controller {
         op: "*",
         x,
         y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an Integer`,
+        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
       });
     } else if (!x || !y) {
       let invalidParameters = [];
@@ -204,7 +204,7 @@ export default class MathsController extends Controller {
         op: "/",
         x,
         y,
-        error: `${invalidParameters.join(", ")} is invalid. Must be an Integer`,
+        error: `${invalidParameters.join(", ")} is invalid. Must be an int`,
       });
     } else if (!x || !y) {
       let invalidParameters = [];
@@ -224,7 +224,7 @@ export default class MathsController extends Controller {
         error: `${invalidParameters.join(", ")} missing.`,
       });
     } else {
-      const answer = parseFloat(x) / parseFloat(y);
+      const answer = parseInt(x) / parseInt(y);
       this.HttpContext.response.JSON({
         op: "/",
         x,
@@ -235,13 +235,7 @@ export default class MathsController extends Controller {
   }
 
   Modulus(x, y) {
-    if (
-      isNaN(x) ||
-      isNaN(y) ||
-      !Number.isInteger(Number(x)) ||
-      !Number.isInteger(Number(y)) ||
-      y === 0
-    ) {
+    if (isNaN(x) || !Number.isInteger(parseInt(x)) || isNaN(y) ||  !Number.isInteger(parseInt(y)) || y == 0) {
       let invalidParameters = [];
 
       if (isNaN(x) || !Number.isInteger(Number(x))) {
@@ -286,8 +280,9 @@ export default class MathsController extends Controller {
     }
   }
 
+  //Je ne comprend pas pourquoi le factorial et le ntnPrime ne fonctionne pas.
   Factorial(number) {
-    if (isNaN(number) || !Number.isInteger(Number(number)) || number < 0) {
+    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number < 0) {
       this.HttpContext.response.JSON({
         op: "!",
         number,
@@ -310,7 +305,7 @@ export default class MathsController extends Controller {
   }
 
   Primality(number) {
-    if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 1) {
+    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number <= 1) {
       this.HttpContext.response.JSON({
         op: "p",
         number,
@@ -333,11 +328,11 @@ export default class MathsController extends Controller {
   }
 
   NtnPrimeNumber(number) {
-    if (isNaN(number) || !Number.isInteger(number) || number < 0) {
+    if (isNaN(number) || !Number.isInteger(parseInt(number)) || number < 0) {
       this.HttpContext.response.JSON({
         op: "np",
         number,
-        error: "Number is invalid. Must ber an int greater than 1",
+        error: "Number is invalid. Must be an int greater than 1",
       });
     } else if (!number) {
       this.HttpContext.response.JSON({
@@ -375,7 +370,7 @@ export default class MathsController extends Controller {
     return true;
   }
 
-  findNthPrime(number) {
+  FindNthPrime(number) {
     let count = 0;
     let num = 2;
     while (count < number) {
