@@ -291,7 +291,7 @@ export default class MathsController extends Controller {
         } else if (!number) {
 
             this.HttpContext.response.JSON({
-                op: '!',
+                op: 'p',
                 number,
                 error: `Parameter missing: number`
             });
@@ -301,23 +301,22 @@ export default class MathsController extends Controller {
         }
     }
 
-    NthPrime(number) {
-        if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 0) {
+    NtnPrime(number) {
+        if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 1) {
             this.HttpContext.response.JSON({
                 op: 'np',
                 number,
-                error: 'Invalid parameter: number. It must be a positive integer.'
+                error: 'Invalid parameter: number. It must be an integer greater than 1.'
             });
-        }
-        else if (!number) {
+        } else if (!number) {
+
             this.HttpContext.response.JSON({
                 op: '!',
                 number,
-                error: 'Parameter missing: number'
+                error: `Parameter missing: number`
             });
-        }
-        else {
-            const result = this.FindNthPrime(parseInt(number));
+        } else {
+            const result = this.FindNtnPrime(parseInt(number));
             this.HttpContext.response.JSON({ op: 'np', number, value: result });
         }
     }
