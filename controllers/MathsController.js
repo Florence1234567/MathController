@@ -276,7 +276,7 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = this.factorial(parseInt(number));
+            const result = this.Factorial(parseInt(number));
             this.HttpContext.response.JSON({ op: '!', number, value: result });
         }
     }
@@ -296,7 +296,7 @@ export default class MathsController extends Controller {
                 error: `Parameter missing: number`
             });
         } else {
-            const result = this.isPrime(parseInt(number));
+            const result = this.IsPrime(parseInt(number));
             this.HttpContext.response.JSON({ op: 'p', number, value: result });
         }
     }
@@ -308,21 +308,21 @@ export default class MathsController extends Controller {
                 number,
                 error: 'Invalid parameter: number. It must be a positive integer.'
             });
-        } 
+        }
         else if (!number) {
             this.HttpContext.response.JSON({
                 op: '!',
                 number,
                 error: 'Parameter missing: number'
             });
-        } 
+        }
         else {
-            const result = this.findNthPrime(parseInt(number));
+            const result = this.FindNthPrime(parseInt(number));
             this.HttpContext.response.JSON({ op: 'np', number, value: result });
         }
     }
 
-    factorial(number) {
+    Factorial(number) {
         if (number === 0 || number === 1) {
             return 1;
         } else {
