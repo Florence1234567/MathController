@@ -311,7 +311,7 @@ export default class MathsController extends Controller {
         } else if (!number) {
 
             this.HttpContext.response.JSON({
-                op: '!',
+                op: 'np',
                 number,
                 error: `Parameter missing: number`
             });
