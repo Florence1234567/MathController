@@ -87,8 +87,12 @@ export default class MathsController extends Controller {
                 error: `${invalidParameters.join(', ')} missing.`
             });
         } else {
-            const result = parseFloat(x) + parseFloat(y);
-            this.HttpContext.response.JSON({ op: '+', x, y, value: result });
+            const answer = parseFloat(x) + parseFloat(y);
+            this.HttpContext.response.JSON({
+                op: '+',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -129,8 +133,12 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = parseFloat(x) - parseFloat(y);
-            this.HttpContext.response.JSON({ op: '-', x, y, value: result });
+            const answer = parseFloat(x) - parseFloat(y);
+            this.HttpContext.response.JSON({
+                op: '-',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -171,8 +179,12 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = parseFloat(x) * parseFloat(y);
-            this.HttpContext.response.JSON({ op: '*', x, y, value: result });
+            const answer = parseInt(x) * parseInt(y);
+            this.HttpContext.response.JSON({
+                op: '*',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -213,8 +225,12 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = parseFloat(x) / parseFloat(y);
-            this.HttpContext.response.JSON({ op: '/', x, y, value: result });
+            const answer = parseFloat(x) / parseFloat(y);
+            this.HttpContext.response.JSON({
+                op: '/',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -255,8 +271,12 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = parseInt(x) % parseInt(y);
-            this.HttpContext.response.JSON({ op: '%', x, y, value: result });
+            const answer = parseInt(x) % parseInt(y);
+            this.HttpContext.response.JSON({
+                op: '%',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -276,13 +296,17 @@ export default class MathsController extends Controller {
             });
         }
         else {
-            const result = this.Factorial(parseInt(number));
-            this.HttpContext.response.JSON({ op: '!', number, value: result });
+            const answer = this.Factorial(parseInt(number));
+            this.HttpContext.response.JSON({
+                op: '!',
+                number,
+                value: answer
+            });
         }
     }
 
     Primality(number) {
-        if (isNaN(number) || !Number.isInteger(number) || number < 0) {
+        if (isNaN(number) || !Number.isInteger(number) || number <= 1) {
             this.HttpContext.response.JSON({
                 op: 'p',
                 number,
@@ -296,8 +320,12 @@ export default class MathsController extends Controller {
                 error: 'Number missing.'
             });
         } else {
-            const result = this.IsPrime(parseInt(number) || number < 0);
-            this.HttpContext.response.JSON({ op: 'p', number, value: result });
+            const answer = this.IsPrime(parseInt(number));
+            this.HttpContext.response.JSON({
+                op: 'p',
+                number,
+                value: answer
+            });
         }
     }
 
@@ -325,6 +353,7 @@ export default class MathsController extends Controller {
             });
         }
     }
+    
 
     Factorial(number) {
         if (number === 0 || number === 1) {
