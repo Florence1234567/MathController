@@ -38,13 +38,13 @@ export default class MathsController extends Controller {
                 this.Modulus(urlParams.x, urlParams.y);
                 break;
             case '!':
-                this.Factorial(urlParams.number);
+                this.Factorial(urlParams.n);
                 break;
             case 'p':
-                this.Primality(urlParams.number);
+                this.Primality(urlParams.n);
                 break;
             case 'np':
-                this.NthPrime(urlParams.number);
+                this.NthPrime(urlParams.n);
                 break;
             default:
                 this.HttpContext.response.badRequest("Invalid operation");
