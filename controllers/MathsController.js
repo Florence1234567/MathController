@@ -67,7 +67,7 @@ export default class MathsController extends Controller {
                 op: '+',
                 x,
                 y,
-                error: `Invalid parameters: ${invalidParameters.join(', ')}. Must be an Integer`
+                error: `${invalidParameters.join(', ')} is invalid. Must be an Integer`
             });
         } else if (!x || !y) {
             let invalidParameters = [];
@@ -84,7 +84,7 @@ export default class MathsController extends Controller {
                 op: '+',
                 x,
                 y,
-                error: `Parameter(s) missing: ${invalidParameters.join(', ')}`
+                error: `${invalidParameters.join(', ')} missing.`
             });
         } else {
             const result = parseFloat(x) + parseFloat(y);
@@ -108,7 +108,7 @@ export default class MathsController extends Controller {
                 op: '-',
                 x,
                 y,
-                error: `Invalid parameters: ${invalidParameters.join(', ')}. Must be an Integer`
+                error: `${invalidParameters.join(', ')} is invalid. Must be an Integer`
             });
         } else if (!x || !y) {
             let invalidParameters = [];
@@ -125,7 +125,7 @@ export default class MathsController extends Controller {
                 op: '-',
                 x,
                 y,
-                error: `Parameter(s) missing: ${invalidParameters.join(', ')}`
+                error: `${invalidParameters.join(', ')} missing.`
             });
         }
         else {
@@ -150,7 +150,7 @@ export default class MathsController extends Controller {
                 op: '*',
                 x,
                 y,
-                error: `Invalid parameters: ${invalidParameters.join(', ')}. Must be an Integer`
+                error: `${invalidParameters.join(', ')} is invalid. Must be an Integer`
             });
         } else if (!x || !y) {
             let invalidParameters = [];
@@ -167,7 +167,7 @@ export default class MathsController extends Controller {
                 op: '*',
                 x,
                 y,
-                error: `Parameter(s) missing: ${invalidParameters.join(', ')}`
+                error: `${invalidParameters.join(', ')} missing.`
             });
         }
         else {
@@ -192,7 +192,7 @@ export default class MathsController extends Controller {
                 op: '/',
                 x,
                 y,
-                error: `Invalid parameters: ${invalidParameters.join(', ')}. Must be an Integer`
+                error: `${invalidParameters.join(', ')} is invalid. Must be an Integer`
             });
         } else if (!x || !y) {
             let invalidParameters = [];
@@ -209,7 +209,7 @@ export default class MathsController extends Controller {
                 op: '/',
                 x,
                 y,
-                error: `Parameter(s) missing: ${invalidParameters.join(', ')} `
+                error: `${invalidParameters.join(', ')} missing.`
             });
         }
         else {
@@ -234,7 +234,7 @@ export default class MathsController extends Controller {
                 op: '%',
                 x,
                 y,
-                error: `Invalid parameters: ${invalidParameters.join(', ')}. Must be an Integer`
+                error: `${invalidParameters.join(', ')} is invalid. Must be an Integer`
             });
         } else if (!x || !y) {
             let invalidParameters = [];
@@ -251,7 +251,7 @@ export default class MathsController extends Controller {
                 op: '%',
                 x,
                 y,
-                error: `Parameter(s) missing: ${invalidParameters.join(', ')}`
+                error: `${invalidParameters.join(', ')} missing.`
             });
         }
         else {
@@ -265,14 +265,14 @@ export default class MathsController extends Controller {
             this.HttpContext.response.JSON({
                 op: '!',
                 number,
-                error: 'Invalid parameter: number. It must be a non-negative integer.'
+                error: 'Number is invalid. It must be a non-negative int.'
             });
         } else if (!number) {
 
             this.HttpContext.response.JSON({
                 op: '!',
                 number,
-                error: `Parameter missing: number`
+                error: 'Number missing.'
             });
         }
         else {
@@ -282,42 +282,47 @@ export default class MathsController extends Controller {
     }
 
     Primality(number) {
-        if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 1) {
+        if (isNaN(number) || !Number.isInteger(number) || number < 0) {
             this.HttpContext.response.JSON({
                 op: 'p',
                 number,
-                error: 'Invalid parameter: number. It must be an integer greater than 1.'
+                error: 'Number is invalid. Must be an int greater than 1.'
             });
         } else if (!number) {
 
             this.HttpContext.response.JSON({
                 op: 'p',
                 number,
-                error: `Parameter missing: number`
+                error: 'Number missing.'
             });
         } else {
-            const result = this.IsPrime(parseInt(number));
+            const result = this.IsPrime(parseInt(number) || number < 0);
             this.HttpContext.response.JSON({ op: 'p', number, value: result });
         }
     }
 
-    NtnPrime(number) {
-        if (isNaN(number) || !Number.isInteger(Number(number)) || number <= 1) {
+    NtnPrimeNumber(number){
+        if(isNaN(number) || !Number.isInteger(number) || number < 0){
+            this.HttpContext.response.JSON({
+                op: 'np', 
+                number,
+                error: "Number is invalid. Must ber an int greater than 1"
+            });
+        }
+        else if(!number){
             this.HttpContext.response.JSON({
                 op: 'np',
                 number,
-                error: 'Invalid parameter: number. It must be an integer greater than 1.'
+                error: 'Number missing.'
             });
-        } else if (!number) {
-
+        }
+        else {
+            const answer = this.FindNtnPrime(parseInt(number));
             this.HttpContext.response.JSON({
                 op: 'np',
                 number,
-                error: `Parameter missing: number`
+                value: answer
             });
-        } else {
-            const result = this.FindNtnPrime(parseInt(number));
-            this.HttpContext.response.JSON({ op: 'np', number, value: result });
         }
     }
 
